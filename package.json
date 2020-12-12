@@ -1,0 +1,23 @@
+{
+  "name": "chaosbot",
+  "version": "0.0.1",
+  "description": "A Discord bot that causes chaos written in Javascript",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Blackglade/ChaosBot.git"
+  },
+  "author": "Harsh Baid <harsh@harshbaid.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Blackglade/ChaosBot/issues"
+  },
+  "homepage": "https://github.com/Blackglade/ChaosBot#readme",
+  "dependencies": {
+    "discord.js": "^12.5.1",
+    "mongoose": "^5.11.7"
+  }
+}
