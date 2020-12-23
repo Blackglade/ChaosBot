@@ -1,6 +1,6 @@
 const regex = /[^\s"]+|"([^"]*)"/gi;
 
-module.exports = (message, test) => {
+const parseArgs = (message) => {
 	let arr = [];
 	let match = null;
 
@@ -12,4 +12,13 @@ module.exports = (message, test) => {
 	} while(match !== null);
 
 	return arr;
+}
+
+const printArgs = (args) => args.reduce((acc, cv) => {
+	return acc + `\n • *${cv}*`
+}, "")
+
+module.exports = {
+	parseArgs,
+	printArgs
 }

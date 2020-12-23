@@ -1,5 +1,4 @@
 const Trigger = require('../models/trigger');
-const parseArgs = require('../utils/parseArgs');
 
 const trigger = async (message) => {
 	if(Math.round(Math.random() * 9) !== 6) return;

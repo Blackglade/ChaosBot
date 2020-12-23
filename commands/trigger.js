@@ -1,5 +1,5 @@
 const Trigger = require('../models/trigger.js');
-const parseArgs = require('../utils/parseArgs');
+const {parseArgs, printArgs} = require('../utils/args');
 const { restrictedRoleName } = require('../config.json');
 
 module.exports = {
@@ -12,7 +12,7 @@ module.exports = {
 
 		let args = parseArgs(message.content.slice(9).trim())
 		if(args.length < 2){
-			return message.reply("Please use the proper command format. `!trigger **<trigger_text>** response1 \"response number  2\" \"response3\"`. \nTo remove a trigger, use the keyword remove (ie: `!trigger remove <trigger_name>`)");
+			return message.channel.send("Please use the proper command format. `!trigger **<trigger_text>** response1 \"response number  2\" \"response3\"`. \nTo remove a trigger, use the keyword remove (ie: `!trigger remove <trigger_name>`)");
 		}
 
 		const keyword = args[0].toLowerCase();
@@ -21,7 +21,7 @@ module.exports = {
 		if(keyword === 'remove'){
 			Trigger.findOneAndDelete({trigger: args[0]}, (err) => {
 				if(err) console.log(err);
-				message.reply(`The chat trigger \`${args[0]}\` was deleted!`);
+				message.channel.send(`The chat trigger \`${args[0]}\` was deleted!`);
 			});
 
 			return;
@@ -33,7 +33,7 @@ module.exports = {
 			{upsert: true, new: true},
 			(err) => {
 				if(err) console.log(err);
-				return message.reply(`The chat trigger \`${keyword}\` was applied`);
+				return message.channel.send(`\`${keyword}\` will now trigger the following responses: ${printArgs(args)}`);
 		});
 	},
 }
