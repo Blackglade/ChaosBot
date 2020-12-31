@@ -25,15 +25,15 @@ module.exports = {
 			});
 
 			return;
+		} else {
+			Trigger.findOneAndUpdate(
+				{trigger: keyword},
+				{responses: args},
+				{upsert: true, new: true},
+				(err) => {
+					if(err) console.log(err);
+					return message.channel.send(`\`${keyword}\` will now trigger the following responses: ${printArgs(args)}`);
+			});
 		}
-
-		Trigger.findOneAndUpdate(
-			{trigger: keyword},
-			{responses: args},
-			{upsert: true, new: true},
-			(err) => {
-				if(err) console.log(err);
-				return message.channel.send(`\`${keyword}\` will now trigger the following responses: ${printArgs(args)}`);
-		});
 	},
 }

@@ -14,9 +14,7 @@ const parseArgs = (message) => {
 	return arr;
 }
 
-const printArgs = (args) => args.reduce((acc, cv) => {
-	return acc + `\n • *${cv}*`
-}, "")
+const printArgs = (args) => args.reduce((acc, cv) => acc + `\n • *${cv}*`, "")
 
 module.exports = {
 	parseArgs,
