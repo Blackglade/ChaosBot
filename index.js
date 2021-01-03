@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 
 const { prefix, token, mongoDB } = require('./config.json');
 const chatCommands = require('./chat');
+const customCommands = require('./chat/custom');
 const client = new Discord.Client();
 
 client.commands = new Discord.Collection();
@@ -26,6 +27,8 @@ client.on('message', message => {
 
 	const args = message.content.slice(prefix.length).trim().split(/ +/);
 	const command = args.shift().toLowerCase();
+	
+	customCommands(message, command);
 
 	if (!client.commands.has(command)) return;
 

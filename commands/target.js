@@ -38,8 +38,6 @@ module.exports = {
 				{upsert: true, new: true},
 				(err, docs) => {
 					if(err) console.log(err);
-
-					console.log(docs)
 					return message.channel.send(`Messages from \`${command}\` will now trigger the following responses: ${printArgs(args)}`);
 			});
 		}
