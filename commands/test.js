@@ -1,17 +1,8 @@
-const Harass = require('../models/harass.js');
+const Discord = require('discord.js')
 
 module.exports = {
-	name: 'test',
-	description: '',
+	name: '!test',
 	execute(message, args) {
-		console.log(message.mentions.users.first().username)
-
-		const data = new Harass({
-			name: message.mentions.users.first().username,
-			userID: message.mentions.users.first().id,
-			expiry: 'soon'
-		})
-
-		data.save();
+		console.log("TEST")
 	},
 }

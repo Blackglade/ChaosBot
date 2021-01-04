@@ -1,20 +1,21 @@
 const Trigger = require('../models/trigger.js');
-const {parseArgs, printArgs} = require('../utils/args');
+const {printArgs} = require('../utils/args');
 const { restrictedRoleName } = require('../config.json');
 
 module.exports = {
-	name: 'trigger',
-	description: 'Chat Triggers. Usage <!trigger <trigger_text> response1, response2, response3',
-	execute(message) {
-		if(!message.member.roles.cache.find(role => role.name === restrictedRoleName)){
-			return message.reply("You can\'t use that command!")
-		}
-
-		let args = parseArgs(message.content.slice(9).trim())
-		if(args.length < 2){
-			return message.channel.send("Please use the proper command format. `!trigger **<trigger_text>** response1 \"response number  2\" \"response3\"`. \nTo remove a trigger, use the keyword remove (ie: `!trigger remove <trigger_name>`)");
-		}
-
+	name: '!trigger',
+	help: {
+		title: '!trigger',
+		description: 'Sets a chat trigger to randomly respond when a certain `keyword` is detected. 10% chance of triggering.',
+		fields: [
+			{name: 'Usage:', value: '!trigger <keyword> "<response1>" "<response2>"'},
+			{name: 'Arguments:', value: '`keyword`: The bot will look for this word in any message before initiating a trigger.\n `response`: The bot will respond with a randomly selected response. There is no response limit.'},
+			{name: 'Remove:', value: '`!trigger remove <keyword>` will remove the trigger'}
+		]
+	},
+	permission: 'MANAGE_MESSAGES',
+	args: 2,
+	execute(message, args) {
 		const keyword = args[0].toLowerCase();
 		args.shift();
 
