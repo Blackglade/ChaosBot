@@ -24,7 +24,7 @@ const custom = async (message, command) => {
             })
             dispatcher.on('error', err => console.log(err))
         }
-    }
+    }!
 
     // //message.content.starts 
     // // let result = data.find(msg => msg.userID === String(message.author.id))
