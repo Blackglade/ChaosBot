@@ -35,7 +35,7 @@ client.on('message', message => {
 	const args = parseArgs(message.content.trim())
 	const command = args.shift().toLowerCase();
 	
-	customCommands(message, command);
+	customCommands(message, command.slice(1));
 
 	if (!client.commands.has(command)) return;
 

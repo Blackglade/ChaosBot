@@ -10,6 +10,12 @@ const custom = async (message, command) => {
             message.channel.send(cmd.response)
         } else if(cmd.type === 'voice'){
             const voice = await message.member.voice.channel;
+
+            if(voice === null){
+                message.reply("you are not in a voice channel!");
+                return;
+            }
+
             const connection = await voice.join();
             const dispatcher = connection.play(cmd.response.includes('youtube') ? ytdl(cmd.response, { filter: 'audioonly'}) : cmd.response);
 
