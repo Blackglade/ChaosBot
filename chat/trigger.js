@@ -7,7 +7,7 @@ const trigger = async (message) => {
 	let result = data.find(text => msg.includes(text.trigger))
 
 	if(typeof result !== 'undefined'){
-		if(Math.round(Math.random() * 9) !== 6) return;
+		if(Math.floor(Math.random() * 10) !== 6) return;
 		
 		let responses = result.responses
 		message.reply(responses[Math.round(Math.random() * (responses.length - 1))])

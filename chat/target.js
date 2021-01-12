@@ -4,7 +4,7 @@ const target = async (message) => {
     const data = await Target.find({});
     let result = data.find(msg => msg.userID === String(message.author.id))
 
-	if(Math.round(Math.random() * 100) !== 42) return;
+	if(Math.floor(Math.random() * 100) !== 42) return;
 
 	if(typeof result !== 'undefined'){
 		let responses = result.responses

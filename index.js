@@ -6,6 +6,7 @@ const { token, mongoDB } = require('./config.json');
 const chatCommands = require('./chat');
 const customCommands = require('./chat/custom');
 const { parseArgs } = require('./utils/args');
+const { time } = require('console');
 const client = new Discord.Client();
 
 const embed = {
@@ -16,9 +17,13 @@ const embed = {
 
 client.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+const cooldowns = new Discord.Collection();
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
 	client.commands.set(command.name, command);
+	if(command.cooldown){
+		cooldowns.set(command.name, new Discord.Collection())
+	}
 }
 
 client.once('ready', () => {
@@ -50,6 +55,19 @@ client.on('message', message => {
 		if(cmd.args && args.length < cmd.args){
 			message.channel.send({ embed: {...embed, ...cmd.help} })
 			return;
+		}
+		
+		if(cmd.cooldown){
+			const timestamps = cooldowns.get(cmd.name)
+
+			if(timestamps.has(message.author.id)){
+				let expiry = timestamps.get(message.author.id) + (cmd.cooldown * 3600000);
+				if(Date.now() < expiry) return message.reply(cmd.cooldownMsg);
+			}
+
+			// Set Timestamp
+			timestamps.set(message.author.id, Date.now())
+			setTimeout(() => timestamps.delete(message.author.id), cmd.cooldown * 360000)
 		}
 
 		cmd.execute(message, args);
