@@ -1,4 +1,5 @@
 const Custom = require('../models/custom.js');
+const { printArgs } = require('../utils/args.js');
 
 module.exports = {
 	name: '!custom',
@@ -22,6 +23,12 @@ module.exports = {
 				if(err) console.log(err);
 				message.channel.send(`The custom command \`${command}\` was deleted!`);
 			});
+		} else if(type === 'view'){
+				Custom.find({type: command}, (err, doc) => {
+					if(err) console.log(err)
+					let customCommands = doc.reduce((acc, cv) => acc.push('!' + cv.command) && acc, []);
+					message.channel.send(`Here are the following custom ${command} commands: ${printArgs(customCommands)}`)
+				});
 		} else {
 			Custom.findOneAndUpdate(
 				{type: type, command: command},
