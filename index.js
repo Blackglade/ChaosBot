@@ -47,7 +47,7 @@ client.on('message', message => {
 	try {
 		let cmd = client.commands.get(command);
 
-		if(cmd.permission && !message.channel.permissionsFor(message.client.user).has(cmd.permission)){
+		if(cmd.permission && !message.channel.permissionsFor(message.author).has(cmd.permission)){
 			message.reply("you can't use that command!")
 			return;
 		}
