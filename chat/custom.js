@@ -20,6 +20,7 @@ const custom = async (message, command) => {
             const dispatcher = connection.play(cmd.response.includes('youtube') ? ytdl(cmd.response, { filter: 'audioonly'}) : cmd.response);
 
             dispatcher.on('finish', () => {
+                connection.disconnect();
                 voice.leave();
             })
             dispatcher.on('error', err => console.log(err))
